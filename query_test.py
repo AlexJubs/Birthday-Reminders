@@ -7,8 +7,11 @@ dynamo = boto3.client("dynamodb")
 
 name = 'Alex Jabbour'
 print(boto3.client("dynamodb").query(
-    TableName="Birthdays",
-    KeyConditionExpression=Key("key_name").eq(name)
+    TableName="birthday-reminders",
+    KeyConditionExpression="person = :person",
+    ExpressionAttributeValues = {
+        ":person": {'S': name}
+    }
     ))
 
 exit()

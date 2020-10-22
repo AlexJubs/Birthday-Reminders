@@ -17,6 +17,8 @@ class birthday_sms:
         # query datastore to fetch birthdays for the current month
         items = self.aws_client.scan(TableName="Birthdays")["Items"]
 
+        today = datetime.datetime.today().strftime('%d/%m') # today in MM/DD
+
         # birthdays are stored as "DD/MM"
         for birthday in items:
             today = datetime.datetime.today().strftime('%d/%m') # today in MM/DD
