@@ -5,7 +5,7 @@ aws dynamodb create-table \
         AttributeName=person,AttributeType=S \
         AttributeName=birthday,AttributeType=S \
     --key-schema \
-        AttributeName=birthday,KeyType=HASH \
-        AttributeName=person,KeyType=RANGE \
+        AttributeName=person,KeyType=HASH \
+        AttributeName=birthday,KeyType=RANGE \
 --provisioned-throughput \
         ReadCapacityUnits=10,WriteCapacityUnits=5
