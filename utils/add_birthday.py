@@ -2,7 +2,7 @@
 import boto3
 from pprint import pprint
 
-aws_client = boto3.client("dynamodb")
+dynamo = boto3.client("dynamodb")
 
 def create_entry(birthday, name):
 
@@ -16,10 +16,10 @@ def create_entry(birthday, name):
 		return
 
 	# put the item in the database
-	aws_client.update_item(TableName='Birthdays', Key=Item)
+	dynamo.update_item(TableName='Birthdays', Key=Item)
 
 def check_if_exists(Item):
-	response = aws_client.get_item(
+	response = dynamo.get_item(
 		TableName='Birthdays', Key=Item
 	)
 	# condition for true response
