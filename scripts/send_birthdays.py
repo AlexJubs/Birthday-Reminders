@@ -7,31 +7,31 @@ import credstash
 
 class birthday_sms:
     def __init__(self):
-        self.aws_client = boto3.client("dynamodb") # using the python SDK of AWS DynamoDB
+        self.dynamo = boto3.client("dynamodb") # using the python SDK of AWS DynamoDB
         
         # credstash fetching api tokens/client secret
         self.twilio_sid = credstash.getSecret("twilio_sid")
         self.twilio_api_token = credstash.getSecret("twilio_api_token")
 
     def fetch_birthdays(self):
-        # query datastore to fetch birthdays for the current month
-        items = self.aws_client.scan(TableName="Birthdays")["Items"]
-
         today = datetime.datetime.today().strftime('%d/%m') # today in MM/DD
 
-        # birthdays are stored as "DD/MM"
-        for birthday in items:
-            today = datetime.datetime.today().strftime('%d/%m') # today in MM/DD
+        # query datastore to fetch birthdays for the current date
+        birthdays = self.dynamo.query(
+            TableName="birthday-reminders",
+            KeyConditionExpression="birthday = :birthday",
+            ExpressionAttributeValues = {
+                    ":birthday": {'S': today}
+                }
+        )["Items"]
 
-            # check if anyone's birthday is today
-            if birthday["Birthday"]["S"] == today:
-                message = "It is {}'s birthday today!".format(birthday["Name"]["S"])
+        # birthdays are stored as "DD/MM", this list will contain today's birthdays :)
+        for birthday in birthdays:
+            # send a reminder
+            self.send_Message("Today is {}'s birthday".format(birthday["birthday"]["S"]))
+            print(message) # debugging
 
-                # send a reminder
-                self.send_Message(message)
-                print(message) # debugging
-
-    # send message using twilio API - we run the bash script to do this
+    # send message using twilio API
     def send_Message(self, body):
         payload = {
             "Body":body,
