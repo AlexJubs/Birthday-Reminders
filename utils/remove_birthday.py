@@ -5,7 +5,8 @@ def remove_item(name):
     # Python SDK for AWS DynamoDB
     aws_client = boto3.client("dynamodb")
 
-    # find the birthday by scanning the database
+    # we scan the table because the values are hashed by birthdate 
+    # to allow for retrieving the people's birthdays on each date by the date
     table = aws_client.scan(TableName="Birthdays")["Items"]
 
     for person in table:
