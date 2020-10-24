@@ -20,6 +20,8 @@ def create_entry(birthday, name):
 		print("This birthday already exists in the database")
 		return
 
+	print("adding {} to the database".format(name))
+	
 	# put the item in the database
 	dynamo.update_item(TableName='birthday-sms', Key=Item)
 
