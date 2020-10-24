@@ -6,7 +6,8 @@ dynamo = boto3.client("dynamodb")
 
 def create_entry(birthday, name):
 
-	if int(birthday[:2]) > 12:
+	# make sure the birthdate is correct format
+	if int(birthday[:2]) > 31 or int(birthday[3:]) > 12 or len(birthday) != 5:
 		print("haram birthday")
 		return
 
