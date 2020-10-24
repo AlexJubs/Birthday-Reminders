@@ -6,21 +6,26 @@ dynamo = boto3.client("dynamodb")
 
 def create_entry(birthday, name):
 
+	if int(birthday[:2]) > 12:
+		print("haram birthday")
+		return
+
 	Item = {
-		'key-name': {'S': name},
-		'val-birthday': {'S': birthday}
+		'person': {'S': name},
+		'birthday': {'S': birthday}
 		}
 
-	if (check_if_exists(Item)):
+	if (check_if_exists(Item) == False):
 		print("This birthday already exists in the database")
 		return
 
 	# put the item in the database
-	dynamo.update_item(TableName='Birthdays', Key=Item)
+	dynamo.update_item(TableName='birthday-sms', Key=Item)
+
 
 def check_if_exists(Item):
 	response = dynamo.get_item(
-		TableName='Birthdays', Key=Item
+		TableName='birthday-sms', Key=Item
 	)
 	# condition for true response
 	return not ("item" in response)

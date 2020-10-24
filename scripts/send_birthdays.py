@@ -18,7 +18,7 @@ class birthday_sms:
 
         # query datastore to fetch birthdays for the current date
         birthdays = self.dynamo.query(
-            TableName="birthday-reminders",
+            TableName="birthday-sms",
             KeyConditionExpression="birthday = :birthday",
             ExpressionAttributeValues = {
                     ":birthday": {'S': today}
