@@ -1,3 +1,4 @@
+# Birthday-SMS
 A simple python script to send a SMS to my number reminding me whenever someone's birthday is coming or happpening.
 
 SMS using Twilio SMS API <br>
