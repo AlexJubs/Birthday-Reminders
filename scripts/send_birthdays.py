@@ -40,12 +40,15 @@ class birthday_sms:
         }
 
         # api request to send sms
-        response = requests.request("POST", url="https://api.twilio.com/2010-04-01/Accounts/{}/Messages.json".format(self.twilio_sid),
-                auth = (self.twilio_sid, self.twilio_api_token),
-                data = payload
-            )
+        response = requests.request(
+            method="POST",
+            url="https://api.twilio.com/2010-04-01/Accounts/{}/Messages.json".format(self.twilio_sid),
+            auth = (self.twilio_sid, self.twilio_api_token),
+            data = payload
+        )
+
         # log any errors that might arise 
-        if (response.status_code >= 400):
+        if (response.status_code != 200):
             print(response.json())
 
 if __name__ == "__main__":
