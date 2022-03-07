@@ -28,11 +28,11 @@ class birthday_sms:
         # birthdays are stored as "DD/MM", this list will contain today's birthdays :)
         for birthday in birthdays:
             # send a reminder
-            self.send_Message("Today is {}'s birthday".format(birthday["person"]["S"]))
+            self.send_message("Today is {}'s birthday".format(birthday["person"]["S"]))
             print("sending birthday sms for {}".format(birthday["person"]["S"])) # debugging
 
     # send message using twilio API
-    def send_Message(self, body):
+    def send_message(self, body):
         payload = {
             "Body":body,
             "From":"+14083370462",
