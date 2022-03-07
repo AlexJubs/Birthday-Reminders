@@ -26,9 +26,9 @@ def create_entry(birthday, name):
 	dynamo.update_item(TableName='birthday-sms', Key=Item)
 
 
-def check_if_exists(Item):
+def check_if_exists(item):
 	response = dynamo.get_item(
-		TableName='birthday-sms', Key=Item
+		TableName='birthday-sms', Key=item
 	)
 	# condition for true response
 	return not ("item" in response)
